@@ -12,7 +12,7 @@ const getAll = async (req, res, next) => {
   }
 };
 
-getUsersPosts = async (req, res, next) => {
+const getUsersPosts = async (req, res, next) => {
   const page = req.query.page;
   const perPage = req.query.perPage || 3;
   try {

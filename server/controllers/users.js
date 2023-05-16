@@ -1,8 +1,8 @@
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
 
 const User = require("../models/user");
-const { Op } = require("sequelize");
 
 // const sendPasswordResetEmail = require("../utils/sendPasswordResetEmail");
 // const sendVerificationEmail = require("../utils/sendVerificationEmail");
@@ -42,9 +42,9 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const user = await User.findOne({
-      $or: [
-        { username: req.body.usernameOrEmail },
-        { email: req.body.usernameOrEmail },
+      [Op.or]: [
+        { username: { [Op.eq]: req.body.usernameOrEmail } },
+        { email: { [Op.eq]: req.body.usernameOrEmail } },
       ],
     });
     if (user) {
@@ -71,8 +71,36 @@ const login = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.userId).select("-password");
+    const user = await User.findByPk(req.userId).select("-password");
     res.json({ user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// TODO: REFACTOR THE REST
+const updateField = async (req, res, next) => {
+  const { field } = req.params;
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+    if (field === "avatar") {
+      if (req.file) {
+        user[field] = req.file.filename;
+      }
+    } else {
+      user[field] = req.body[field];
+    }
+    const updated = await user.save();
+    res.json({
+      user: updated,
+      message: `${
+        field.substring(0, 1).toUpperCase() + field.substring(1)
+      } is successfully updated`,
+    });
   } catch (error) {
     next(error);
   }
@@ -141,33 +169,6 @@ const resetPassword = async (req, res, next) => {
     } else {
       throw new Error("User not found");
     }
-  } catch (error) {
-    next(error);
-  }
-};
-
-const updateField = async (req, res, next) => {
-  const { field } = req.params;
-  try {
-    const user = await User.findById(req.user._id);
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-    if (field === "avatar") {
-      if (req.file) {
-        user[field] = req.file.filename;
-      }
-    } else {
-      user[field] = req.body[field];
-    }
-    const updated = await user.save();
-    res.json({
-      user: updated,
-      message: `${
-        field.substring(0, 1).toUpperCase() + field.substring(1)
-      } is successfully updated`,
-    });
   } catch (error) {
     next(error);
   }
