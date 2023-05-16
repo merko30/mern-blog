@@ -2,7 +2,7 @@ import axios from "axios";
 
 import createAction from "utils/createAction";
 import populateFormData from "utils/transformObjectToFormData";
-import { showMessage, clearMessage } from "../messages/messages.actions";
+import { showMessage } from "../messages/messages.actions";
 
 export const loginAction = createAction("LOGIN");
 export const registerAction = createAction("REGISTER");
@@ -23,6 +23,9 @@ export const register = async (data) =>
 
 export const login = async (values) =>
   await axios.post(`/auth/login`, values, { withCredentials: true });
+
+export const logout = async (values) =>
+  await axios.post(`/auth/logout`, { withCredentials: true });
 
 export const getCurrentUser = async () =>
   await axios.get(`/auth/user`, { withCredentials: true });
@@ -98,9 +101,3 @@ export const getUsersPosts =
 export const clearError = () => clearErrorAction.start();
 
 export const setStatus = (status) => setStatusAction.start(status);
-
-export const logout = () => (dispatch) => {
-  dispatch(clearMessage());
-  dispatch(logoutAction.start());
-  localStorage.removeItem("token");
-};

@@ -86,6 +86,16 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const logout = async (req, res, next) => {
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 1000 * 60 * 60 * 24,
+  });
+
+  res.status(200).json({ message: "Logged out" });
+};
+
 // TODO: REFACTOR THE REST
 const updateField = async (req, res, next) => {
   const { field } = req.params;
@@ -186,6 +196,7 @@ module.exports = {
   register,
   login,
   getUser,
+  logout,
   forgotPassword,
   resetPassword,
   verifyEmail,

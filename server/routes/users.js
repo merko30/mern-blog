@@ -11,6 +11,7 @@ const {
   resetPassword,
   verifyEmail,
   updateField,
+  logout,
 } = require("../controllers/users");
 
 const authMiddleware = require("../config/authMiddleware");
@@ -24,6 +25,8 @@ router.post("/register", register);
 router.post("/login", login);
 
 router.get("/user", authMiddleware, getUser);
+
+router.post("/logout", authMiddleware, logout);
 
 router.put("/update/:field", middlewares, updateField);
 

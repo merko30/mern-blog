@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
 
 import useSession from "hooks/useSession";
@@ -7,11 +8,16 @@ import Button from "shared/Button";
 
 import MenuButton from "./MenuButton";
 import NavItem from "./NavItem";
+import { logout } from "auth/auth.actions";
 
 const Header = () => {
   const [active, setActive] = useState(false);
 
-  const loggedIn = useSession();
+  const { session: loggedIn } = useSession();
+
+  const { mutate: logoutUser } = useMutation((data) => logout(data), {
+    // onSuccess: () => navigate("/"),
+  });
 
   const isActive = active ? "flex" : "hidden";
   return (
@@ -37,7 +43,7 @@ const Header = () => {
             <Button
               color="yellow"
               classes="my-4 border-b md:my-0 md:border-0 md:mx-2"
-              onClick={() => console.log("logout")}
+              onClick={() => logoutUser()}
             >
               Logout
             </Button>
