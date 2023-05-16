@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 
 const User = require("../models/user");
@@ -48,7 +49,11 @@ const login = async (req, res, next) => {
       ],
     });
     if (user) {
-      if (await user.validPassword(req.body.password)) {
+      const validPassword = bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
+      if (validPassword) {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
         res.cookie("token", token, {
@@ -59,10 +64,10 @@ const login = async (req, res, next) => {
 
         res.json({ message: "Successfully logged in" });
       } else {
-        throw new Error("Wrong password");
+        throw new Error("Invalid credentials");
       }
     } else {
-      throw new Error("User not found");
+      throw new Error("Invalid credentials");
     }
   } catch (error) {
     next(error);
@@ -71,7 +76,10 @@ const login = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.userId).select("-password");
+    console.log(req.userId);
+    const user = await User.findByPk(req.userId, {
+      attributes: { exclude: ["password"] },
+    });
     res.json({ user });
   } catch (error) {
     next(error);

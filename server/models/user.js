@@ -1,6 +1,9 @@
 const Sequelize = require("sequelize");
+const bcrypt = require("bcryptjs");
 
 const sequelize = require("../config/database");
+
+const Post = require("./post");
 
 const User = sequelize.define(
   "User",
@@ -29,5 +32,10 @@ const User = sequelize.define(
     timestamps: true,
   }
 );
+
+User.beforeCreate((user, options) => {
+  const hashedPassword = bcrypt.hashSync(user.password);
+  user.password = hashedPassword;
+});
 
 module.exports = User;

@@ -37,9 +37,7 @@ const Post = sequelize.define(
   }
 );
 
-Post.hasOne(User, {
-  as: "author",
-});
-User.belongsTo(Post);
+User.hasMany(Post);
+Post.belongsTo(User, { as: "author" });
 
 module.exports = Post;

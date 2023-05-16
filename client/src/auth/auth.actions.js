@@ -19,13 +19,13 @@ export const getUsersPostsAction = createAction("GET_USERS_POSTS");
 const url = process.env.REACT_APP_API_URL;
 
 export const register = async (data) =>
-  await axios.post(`${url}/auth/register`, data);
+  await axios.post(`/auth/register`, data);
 
 export const login = async (values) =>
-  await axios.post(`${url}/auth/login`, values, { withCredentials: true });
+  await axios.post(`/auth/login`, values, { withCredentials: true });
 
 export const getCurrentUser = async () =>
-  await axios.get(`${url}/auth/user`, { withCredentials: true });
+  await axios.get(`/auth/user`, { withCredentials: true });
 
 export const verifyEmail = (email, token) => async (dispatch) => {
   dispatch(verifyEmailAction.start());

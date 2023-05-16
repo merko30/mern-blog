@@ -2,6 +2,7 @@ import { createContext, useEffect, useMemo, useState } from "react";
 
 import { getCurrentUser } from "./auth.actions";
 
+// @ts-ignore
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
