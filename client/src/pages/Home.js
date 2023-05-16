@@ -10,7 +10,6 @@ import Pagination from "shared/Pagination";
 
 const Home = () => {
   const { error, isLoading, data: queryData } = useQuery("posts", getPosts);
-
   if (error) {
     return <Error error="Failed to fetch your posts. Try again" />;
   }

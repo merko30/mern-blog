@@ -2,16 +2,10 @@ const Post = require("../models/post");
 const paginate = require("../utils/paginate");
 
 const getAll = async (req, res, next) => {
-  const perPage = 9;
+  const perPage = 10;
   const page = req.query.page || 1;
   try {
-    const response = await paginate(
-      Post,
-      null,
-      { perPage, page },
-      { createdAt: "desc" },
-      [{ path: "author", select: "-password" }]
-    );
+    const response = await Post.findAll();
     res.json(response);
   } catch (error) {
     next(error);

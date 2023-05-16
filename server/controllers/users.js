@@ -2,25 +2,32 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const { Op } = require("sequelize");
 
-const sendPasswordResetEmail = require("../utils/sendPasswordResetEmail");
+// const sendPasswordResetEmail = require("../utils/sendPasswordResetEmail");
 // const sendVerificationEmail = require("../utils/sendVerificationEmail");
 
 const register = async (req, res, next) => {
   try {
     const user = await User.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.email }],
+      where: {
+        [Op.or]: [
+          {
+            email: { [Op.eq]: req.body.email },
+          },
+          {
+            username: { [Op.eq]: req.body.username },
+          },
+        ],
+      },
     });
     if (user) {
       throw new Error("User already exists, check your email or username");
     }
-    const newUser = new User(req.body);
+    (await User.create(req.body)).save();
 
     // const verificationToken = crypto.randomBytes(20).toString("hex");
     // newUser.verificationToken = verificationToken;
-
-    await newUser.save();
-
     // await sendVerificationEmail(newUser, verificationToken);
 
     res.json({

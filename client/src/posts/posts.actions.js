@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const url = process.env.REACT_APP_API_URL;
+const url = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 export const getPosts = async (page = 1) => {
   const URL = `${url}/posts`;

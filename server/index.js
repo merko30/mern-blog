@@ -6,12 +6,20 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const router = require("./routes");
-const setDatabase = require("./config/database");
+const sequelize = require("./config/database");
 const errorHandler = require("./config/errorHandler");
 
 const app = express();
 
-setDatabase();
+(async () => {
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync({ force: true });
+    console.log("Connection has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+})();
 
 app.use(
   cors({

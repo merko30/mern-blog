@@ -1,16 +1,45 @@
-const mongoose = require("mongoose");
+const Sequelize = require("sequelize");
 
-const schema = new mongoose.Schema(
+const sequelize = require("../config/database");
+
+const User = require("./user");
+
+const Post = sequelize.define(
+  "Post",
   {
-    title: { type: String, required: true, minlength: 10 },
-    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    body: { type: String, required: true, minlength: 150 },
-    image: { type: String },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-    slug: { type: String, required: true },
+    id: {
+      primaryKey: true,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+    },
+    title: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: { min: 10 },
+    },
+    body: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      validate: { min: 150 },
+    },
+    image: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    slug: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
   },
-  { timestamps: true }
+  {
+    // Other model options go here
+    timestamps: true,
+  }
 );
 
-module.exports = mongoose.model("Post", schema);
+Post.hasOne(User, {
+  as: "author",
+});
+User.belongsTo(Post);
+
+module.exports = Post;
