@@ -22,7 +22,7 @@ const Header = () => {
   const isActive = active ? "flex" : "hidden";
   return (
     <header className="shadow py-4">
-      <div className="container flex flex-col md:flex-row items-start md:items-center justify-center md:justify-between">
+      <div className="container px-6 flex flex-col md:flex-row items-start md:items-center justify-center md:justify-between">
         <Link to="/">
           <img
             src={`${process.env.PUBLIC_URL}/img/blog.svg`}
