@@ -13,6 +13,16 @@ exports.id = "app/api/posts/route";
 exports.ids = ["app/api/posts/route"];
 exports.modules = {
 
+/***/ "@prisma/client":
+/*!*********************************!*\
+  !*** external "@prisma/client" ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = require("@prisma/client");
+
+/***/ }),
+
 /***/ "next/dist/compiled/next-server/app-route.runtime.dev.js":
 /*!**************************************************************************!*\
   !*** external "next/dist/compiled/next-server/app-route.runtime.dev.js" ***!
@@ -39,7 +49,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   GET: () => (/* binding */ GET)\n/* harmony export */ });\n/* harmony import */ var next_dist_server_web_exports_next_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/server/web/exports/next-response */ \"(rsc)/./node_modules/next/dist/server/web/exports/next-response.js\");\n\nconst GET = ()=>{\n    return next_dist_server_web_exports_next_response__WEBPACK_IMPORTED_MODULE_0__[\"default\"].json({\n        ok: true\n    });\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9hcHAvYXBpL3Bvc3RzL3JvdXRlLnRzIiwibWFwcGluZ3MiOiI7Ozs7O0FBQzJDO0FBRXBDLE1BQU1DLE1BQXNCO0lBQ2pDLE9BQU9ELGtGQUFZQSxDQUFDRSxJQUFJLENBQUM7UUFBRUMsSUFBSTtJQUFLO0FBQ3RDLEVBQUUiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9tZXJuLW5leHQvLi9hcHAvYXBpL3Bvc3RzL3JvdXRlLnRzP2Q4NzEiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmV4dEFwaUhhbmRsZXIgfSBmcm9tIFwibmV4dFwiO1xuaW1wb3J0IHsgTmV4dFJlc3BvbnNlIH0gZnJvbSBcIm5leHQvc2VydmVyXCI7XG5cbmV4cG9ydCBjb25zdCBHRVQ6IE5leHRBcGlIYW5kbGVyID0gKCkgPT4ge1xuICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oeyBvazogdHJ1ZSB9KTtcbn07XG4iXSwibmFtZXMiOlsiTmV4dFJlc3BvbnNlIiwiR0VUIiwianNvbiIsIm9rIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./app/api/posts/route.ts\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   GET: () => (/* binding */ GET)\n/* harmony export */ });\n/* harmony import */ var next_dist_server_web_exports_next_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/server/web/exports/next-response */ \"(rsc)/./node_modules/next/dist/server/web/exports/next-response.js\");\n/* harmony import */ var _prisma_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @prisma/client */ \"@prisma/client\");\n/* harmony import */ var _prisma_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_prisma_client__WEBPACK_IMPORTED_MODULE_1__);\n\n\nconst GET = async (req)=>{\n    const prisma = new _prisma_client__WEBPACK_IMPORTED_MODULE_1__.PrismaClient();\n    const posts = await prisma.post.findMany(req.body || {});\n    return next_dist_server_web_exports_next_response__WEBPACK_IMPORTED_MODULE_0__[\"default\"].json({\n        posts\n    });\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9hcHAvYXBpL3Bvc3RzL3JvdXRlLnRzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFDMkM7QUFDRztBQUV2QyxNQUFNRSxNQUFzQixPQUFPQztJQUN4QyxNQUFNQyxTQUFTLElBQUlILHdEQUFZQTtJQUUvQixNQUFNSSxRQUFRLE1BQU1ELE9BQU9FLElBQUksQ0FBQ0MsUUFBUSxDQUFDSixJQUFJSyxJQUFJLElBQUksQ0FBQztJQUV0RCxPQUFPUixrRkFBWUEsQ0FBQ1MsSUFBSSxDQUFDO1FBQUVKO0lBQU07QUFDbkMsRUFBRSIsInNvdXJjZXMiOlsid2VicGFjazovL21lcm4tbmV4dC8uL2FwcC9hcGkvcG9zdHMvcm91dGUudHM/ZDg3MSJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZXh0QXBpSGFuZGxlciB9IGZyb20gXCJuZXh0XCI7XG5pbXBvcnQgeyBOZXh0UmVzcG9uc2UgfSBmcm9tIFwibmV4dC9zZXJ2ZXJcIjtcbmltcG9ydCB7IFByaXNtYUNsaWVudCB9IGZyb20gXCJAcHJpc21hL2NsaWVudFwiO1xuXG5leHBvcnQgY29uc3QgR0VUOiBOZXh0QXBpSGFuZGxlciA9IGFzeW5jIChyZXEpID0+IHtcbiAgY29uc3QgcHJpc21hID0gbmV3IFByaXNtYUNsaWVudCgpO1xuXG4gIGNvbnN0IHBvc3RzID0gYXdhaXQgcHJpc21hLnBvc3QuZmluZE1hbnkocmVxLmJvZHkgfHwge30pO1xuXG4gIHJldHVybiBOZXh0UmVzcG9uc2UuanNvbih7IHBvc3RzIH0pO1xufTtcbiJdLCJuYW1lcyI6WyJOZXh0UmVzcG9uc2UiLCJQcmlzbWFDbGllbnQiLCJHRVQiLCJyZXEiLCJwcmlzbWEiLCJwb3N0cyIsInBvc3QiLCJmaW5kTWFueSIsImJvZHkiLCJqc29uIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./app/api/posts/route.ts\n");
 
 /***/ })
 
