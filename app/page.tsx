@@ -1,51 +1,24 @@
-export default function Home() {
+import PostList from "@/components/posts/PostList";
+
+async function getData() {
+  const res = await fetch("http://localhost:3000/api/posts");
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+export default async function Home() {
+  const data = await getData();
+
   return (
     <>
-      <h1 className="mb-16">
-        some posts here Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        A, doloribus atque soluta facere, doloremque ullam molestiae tenetur
-        optio architecto corporis reiciendis ipsum fuga rem tempore? Vitae neque
-        dicta omnis! Alias! Lorem ipsum dolor sit, amet consectetur adipisicing
-        elit. Voluptas explicabo nam distinctio assumenda veniam alias earum
-        officia, dicta nisi doloremque vel tenetur, expedita, quia delectus ex
-        harum debitis reiciendis magni.
-      </h1>
-      <h1 className="mb-16">
-        some posts here Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        A, doloribus atque soluta facere, doloremque ullam molestiae tenetur
-        optio architecto corporis reiciendis ipsum fuga rem tempore? Vitae neque
-        dicta omnis! Alias! Lorem ipsum dolor sit, amet consectetur adipisicing
-        elit. Voluptas explicabo nam distinctio assumenda veniam alias earum
-        officia, dicta nisi doloremque vel tenetur, expedita, quia delectus ex
-        harum debitis reiciendis magni.
-      </h1>
-      <h1 className="mb-16">
-        some posts here Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        A, doloribus atque soluta facere, doloremque ullam molestiae tenetur
-        optio architecto corporis reiciendis ipsum fuga rem tempore? Vitae neque
-        dicta omnis! Alias! Lorem ipsum dolor sit, amet consectetur adipisicing
-        elit. Voluptas explicabo nam distinctio assumenda veniam alias earum
-        officia, dicta nisi doloremque vel tenetur, expedita, quia delectus ex
-        harum debitis reiciendis magni.
-      </h1>
-      <h1 className="mb-16">
-        some posts here Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        A, doloribus atque soluta facere, doloremque ullam molestiae tenetur
-        optio architecto corporis reiciendis ipsum fuga rem tempore? Vitae neque
-        dicta omnis! Alias! Lorem ipsum dolor sit, amet consectetur adipisicing
-        elit. Voluptas explicabo nam distinctio assumenda veniam alias earum
-        officia, dicta nisi doloremque vel tenetur, expedita, quia delectus ex
-        harum debitis reiciendis magni.
-      </h1>
-      <h1 className="mb-16">
-        some posts here Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        A, doloribus atque soluta facere, doloremque ullam molestiae tenetur
-        optio architecto corporis reiciendis ipsum fuga rem tempore? Vitae neque
-        dicta omnis! Alias! Lorem ipsum dolor sit, amet consectetur adipisicing
-        elit. Voluptas explicabo nam distinctio assumenda veniam alias earum
-        officia, dicta nisi doloremque vel tenetur, expedita, quia delectus ex
-        harum debitis reiciendis magni.
-      </h1>
+      <PostList posts={data.posts} />
     </>
   );
 }
