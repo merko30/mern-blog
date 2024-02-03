@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+
+import { prisma } from "@/prisma";
 
 export const POST = async (req: Request) => {
-  const prisma = new PrismaClient();
-
   const data = await req.json();
 
   const existingUser = await prisma.user.findUnique({
@@ -14,13 +14,17 @@ export const POST = async (req: Request) => {
 
   if (existingUser) {
     return NextResponse.json(
-      { message: "Email is already in use" },
+      { error: "Email is already in use" },
       { status: 409 }
     );
   }
 
   try {
-    await prisma.user.create({ data });
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
+    console.log({ data });
+
+    await prisma.user.create({ data: { ...data, password: hashedPassword } });
     return NextResponse.json(
       { message: "You have been successfully registered" },
       { status: 200 }
@@ -29,7 +33,7 @@ export const POST = async (req: Request) => {
     console.log(error);
 
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { error: "Something went wrong" },
       { status: 400 }
     );
   }

@@ -1,20 +1,13 @@
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
+import transformFormData from "@/utils/transformFormData";
 
 const CreatePost = () => {
   async function createPost(formData: FormData) {
     "use server";
 
-    const data: Record<string, FormDataEntryValue> = {};
-
-    const formDataObject = Object.fromEntries(formData.entries());
-    for (let field in formDataObject) {
-      // TODO: handle image
-      const fields = ["title", "content"];
-      if (fields.includes(field)) {
-        data[field] = formDataObject[field];
-      }
-    }
+    // TODO: handle image
+    const data = transformFormData(formData, ["title", "content"]);
 
     fetch("http://localhost:3000/api/posts", {
       method: "POST",

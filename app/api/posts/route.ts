@@ -1,10 +1,9 @@
 import { NextApiHandler } from "next";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+
+import { prisma } from "@/prisma";
 
 export const GET: NextApiHandler = async (req) => {
-  const prisma = new PrismaClient();
-
   const posts = await prisma.post.findMany({
     ...req.body,
     include: {
@@ -16,8 +15,6 @@ export const GET: NextApiHandler = async (req) => {
 };
 
 export const POST = async (req: Request) => {
-  const prisma = new PrismaClient();
-
   const data = await req.json();
 
   if (!data || !Object.keys(data).length) {
@@ -33,8 +30,6 @@ export const POST = async (req: Request) => {
 };
 
 export const PUT = async (req: Request) => {
-  const prisma = new PrismaClient();
-
   const data = await req.json();
 
   if (!data || !Object.keys(data).length || !data.id) {
