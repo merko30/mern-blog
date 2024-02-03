@@ -1,7 +1,9 @@
 import PostList from "@/components/posts/PostList";
 
 async function getData() {
-  const res = await fetch("http://localhost:3000/api/posts");
+  const res = await fetch("http://localhost:3000/api/posts", {
+    next: { revalidate: 10 },
+  });
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary

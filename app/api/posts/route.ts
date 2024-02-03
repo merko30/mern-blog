@@ -5,7 +5,12 @@ import { PrismaClient } from "@prisma/client";
 export const GET: NextApiHandler = async (req) => {
   const prisma = new PrismaClient();
 
-  const posts = await prisma.post.findMany(req.body || {});
+  const posts = await prisma.post.findMany({
+    ...req.body,
+    include: {
+      author: true,
+    },
+  });
 
   return NextResponse.json({ posts });
 };
