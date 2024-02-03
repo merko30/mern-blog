@@ -1,3 +1,5 @@
+import { formatDistance } from "date-fns/formatDistance";
+
 import { Post } from "@/types/posts";
 
 import Image from "../Image";
@@ -12,7 +14,7 @@ const PostCard = ({ post }: PostCardProps) => (
       <Image src={post.image!} fill placeholder="empty" alt={post.title} />
     </div>
     <div className="py-3 px-2">
-      <h1 className="font-medium">{post.title}</h1>
+      <h1 className="text-sm font-medium">{post.title}</h1>
       <p className="text-gray-800 text-sm">{post.content}</p>
       <div className="flex items-center gap-2 mt-4">
         <Image
@@ -24,7 +26,9 @@ const PostCard = ({ post }: PostCardProps) => (
         />
         <div>
           <h2 className="text-sm font-medium">John Doe</h2>
-          <p className="text-xs text-gray-700">{post.createdAt}</p>
+          <p className="text-xs text-gray-700">
+            {formatDistance(post.createdAt, Date.now(), { addSuffix: true })}
+          </p>
         </div>
       </div>
     </div>
