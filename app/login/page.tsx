@@ -1,5 +1,6 @@
 "use client";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { ChangeEventHandler, FormEvent, useState } from "react";
 
 import Input from "@/components/Input";
@@ -7,6 +8,7 @@ import Alert from "@/components/Alert";
 
 const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const [data, setData] = useState({
     email: "merim.hasanbegovic@outlook.com",
@@ -18,10 +20,10 @@ const LoginPage = () => {
 
     const response = await signIn("credentials", { redirect: false, ...data });
 
-    console.log({ response });
-
     if (response?.error) {
       setError(response.error);
+    } else {
+      router.push("/");
     }
   };
 
