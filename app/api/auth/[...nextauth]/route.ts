@@ -1,24 +1,21 @@
 import NextAuth, { Awaitable, User } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
 import { prisma } from "@/prisma";
 
-export default NextAuth({
+const handler = NextAuth({
   adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: "/login",
+  },
   providers: [
     Credentials({
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
-        username: {
-          label: "Username",
-          type: "text",
-          placeholder: "John Smith",
-        },
       },
       async authorize(credentials) {
         if (!credentials) return null;
@@ -55,3 +52,5 @@ export default NextAuth({
     }),
   ],
 });
+
+export { handler as GET, handler as POST };
