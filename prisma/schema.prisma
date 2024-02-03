@@ -16,6 +16,8 @@ model User {
   lastName  String?
   role      Role    @default(USER)
   posts     Post[]
+
+  @@map("users")
 }
 
 model Post {
@@ -27,12 +29,16 @@ model Post {
   authorId   Int
   author     User       @relation(fields: [authorId], references: [id])
   categories Category[] @relation("CategoryToPost")
+
+  @@map("posts")
 }
 
 model Category {
   id    Int    @id @default(autoincrement())
   name  String
   posts Post[] @relation("CategoryToPost")
+
+  @@map("categories")
 }
 
 enum Role {
