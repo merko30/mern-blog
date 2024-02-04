@@ -3,7 +3,7 @@ export interface Author {
   firstName: string;
   lastName: string;
   email: string;
-  avatar: string;
+  image: string;
 }
 
 export interface Post {

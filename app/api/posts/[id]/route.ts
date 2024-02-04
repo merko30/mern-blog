@@ -1,4 +1,3 @@
-import { NextApiHandler } from "next";
 import { NextResponse } from "next/server";
 
 import { prisma } from "@/prisma";
@@ -9,6 +8,7 @@ export const GET = async (
 ) => {
   const post = await prisma.post.findUnique({
     where: { id: Number(params.id) },
+    include: { author: true },
   });
 
   return NextResponse.json({ post }, { status: 200 });
