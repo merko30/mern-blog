@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const Navigation = () => {
   const { data: session, status } = useSession();
@@ -31,7 +31,10 @@ const Navigation = () => {
               </li>
             </>
           ) : (
-            <li>Hello {session?.user?.email}</li>
+            <>
+              <li>Hello {session?.user?.email}</li>
+              <li onClick={() => signOut()}>Logout</li>
+            </>
           )
         ) : null}
       </ul>

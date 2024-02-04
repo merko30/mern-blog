@@ -54,14 +54,25 @@ const authOptions: AuthOptions = {
       },
     }),
   ],
-  //   callbacks: {
-  //     jwt: async ({ token }) => {
-  //       return token;
-  //     },
-  //     session: async ({  session }) => {
-  //       return session;
-  //     },
-  //   },
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token = {
+          ...token,
+          userId: user.id,
+        };
+      }
+
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (token.userId) {
+        session.user!.id = token.userId as string;
+      }
+
+      return session;
+    },
+  },
 };
 
 export default authOptions;
