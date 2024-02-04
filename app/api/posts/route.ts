@@ -1,11 +1,27 @@
-import { NextApiHandler } from "next";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
 import prisma from "@/prisma";
 
-export const GET: NextApiHandler = async (req) => {
+export const GET = async (req: NextRequest) => {
+  const params = req.nextUrl.searchParams;
+
+  const take = parseInt(params.get("limit") ?? "10");
+  const page = parseInt(params.get("page") ?? "1");
+  const skip = page === 1 ? 0 : page * take;
+  const authorId = params.get("userId");
+
+  let where;
+
+  if (authorId) {
+    where = {
+      authorId,
+    };
+  }
+
   const posts = await prisma.post.findMany({
-    ...req.body,
+    take,
+    skip,
+    where,
     include: {
       author: true,
     },

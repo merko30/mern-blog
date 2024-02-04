@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import Image from "@/components/Image";
 
 import authOptions from "@/lib/authOptions";
+import Link from "next/link";
+import ActiveLink from "@/components/ActiveLink";
 
 async function getData(): Promise<{ user: User }> {
   const session = await getServerSession(authOptions);
@@ -28,19 +30,27 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div>
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-6 mb-10 w-max">
         <Image
           src={user.image as string}
           alt="user's avatar"
           width={0}
           height={0}
-          className="w-[140px] h-[140px] rounded-full"
+          className="w-[80px] h-[80px] md:w-[140px] md:h-[140px] rounded-full flex-1"
         />
         <div>
-          <h1 className="text-2xl">{user.email}</h1>
+          <h1 className="sm:text-2xl">{user.email}</h1>
         </div>
       </div>
-      <hr className="my-10" />
+      <div className="flex items-center gap-4 mb-6">
+        {[
+          { label: "Profile", href: "/profile" },
+          { label: "Settings", href: "/profile/settings" },
+        ].map((link) => (
+          <ActiveLink href={link.href}>{link.label}</ActiveLink>
+        ))}
+      </div>
+      <hr className="mb-10" />
       {children}
     </div>
   );

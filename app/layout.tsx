@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { getServerSession } from "next-auth";
 import "./globals.css";
-
-import authOptions from "@/lib/authOptions";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -25,7 +22,9 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Provider>
           <Header />
-          <main className="container mx-auto flex-auto py-12">{children}</main>
+          <main className="container mx-auto flex-auto py-12 px-4 md:px-0 lg:max-w-[750px]">
+            {children}
+          </main>
           <Footer />
         </Provider>
       </body>

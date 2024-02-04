@@ -8,12 +8,13 @@ import PostList from "@/components/posts/PostList";
 async function getData(): Promise<{ posts: Post[] }> {
   const session = await getServerSession(authOptions);
 
-  console.log(session?.user);
-
   // filter by user
-  const response = await fetch("http://localhost:3000/api/posts", {
-    headers: { "Content-Type": "application/json" },
-  });
+  const response = await fetch(
+    `http://localhost:3000/api/posts?userId=${session?.user!.id}`,
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
 
   const json = await response.json();
 
@@ -27,8 +28,15 @@ const ProfilePage = async () => {
 
   return (
     <>
-      <h1 className="text-2xl mb-8">My posts</h1>
-      <PostList posts={posts} columns={3} className="gap-8" />
+      <h1 className="text-2xl font-semibold mb-8">My posts</h1>
+      {!!posts.length && (
+        <PostList posts={posts} columns={3} className="gap-8" />
+      )}
+      {!posts.length && (
+        <p className="text-2xl font-semibold text-gray-300">
+          You have no posts created
+        </p>
+      )}
     </>
   );
 };
