@@ -32,7 +32,11 @@ const Navigation = () => {
             </>
           ) : (
             <>
-              <li>Hello {session?.user?.email}</li>
+              <li>
+                <Link href="/profile" className="text-sm font-md uppercase">
+                  Profile
+                </Link>
+              </li>
               <li onClick={() => signOut()}>Logout</li>
             </>
           )
