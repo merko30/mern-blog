@@ -3,29 +3,37 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 const Navigation = () => {
-  const { data: session } = useSession();
-  console.log({ session });
+  const { data: session, status } = useSession();
 
+  const isLoading = status === "loading";
   return (
     <nav>
       <ul className="flex items-center gap-4">
-        {!session ? (
+        {isLoading && (
           <>
-            <li>
-              <Link href="/login" className="text-sm font-md uppercase">
-                Sign in
-              </Link>
-            </li>
-
-            <li>
-              <Link href="/register" className="text-sm font-md uppercase">
-                Sign up
-              </Link>
-            </li>
+            <li className="w-[100px] h-[20px] bg-gray-200" />
+            <li className="w-[90px] h-[20px] bg-gray-200" />
           </>
-        ) : (
-          <li>Hello {session?.user?.email}</li>
         )}
+        {!isLoading ? (
+          !session ? (
+            <>
+              <li>
+                <Link href="/login" className="text-sm font-md uppercase">
+                  Sign in
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/register" className="text-sm font-md uppercase">
+                  Sign up
+                </Link>
+              </li>
+            </>
+          ) : (
+            <li>Hello {session?.user?.email}</li>
+          )
+        ) : null}
       </ul>
     </nav>
   );
