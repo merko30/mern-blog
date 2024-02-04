@@ -31,7 +31,7 @@ const LoginPage = () => {
     setData((old) => ({ ...old, [e.target.name]: e.target.value }));
 
   return (
-    <div className="pt-10">
+    <div>
       <h1 className="text-2xl text-center mb-10">Welcome back</h1>
       <form
         onSubmit={login}

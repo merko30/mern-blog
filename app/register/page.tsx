@@ -13,7 +13,7 @@ const RegisterPage = () => {
   });
 
   return (
-    <div className="pt-10">
+    <div>
       <h1 className="text-2xl text-center mb-10">Join the community</h1>
       <form
         action={formAction}

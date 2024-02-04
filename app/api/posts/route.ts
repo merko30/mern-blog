@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import { NextResponse } from "next/server";
 
-import { prisma } from "@/prisma";
+import prisma from "@/prisma";
 
 export const GET: NextApiHandler = async (req) => {
   const posts = await prisma.post.findMany({

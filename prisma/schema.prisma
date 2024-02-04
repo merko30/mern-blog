@@ -36,9 +36,13 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
+  firstName     String?
+  lastName      String?
+  name          String
+  email         String   @unique
   password      String
+  shortDescription String?
+  description   String?
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -62,6 +66,7 @@ model Post {
   updatedAt  DateTime   @updatedAt
   title      String
   image      String?
+  slug       String?
   content    String     @db.Text
   published  Boolean    @default(false)
   authorId   String
