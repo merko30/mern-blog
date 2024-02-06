@@ -3,7 +3,7 @@ import { User } from "@prisma/client";
 
 import authOptions from "@/lib/authOptions";
 
-import Settings from "@/components/User/Settings";
+import Settings from "@/components/users/Settings";
 
 async function getData(): Promise<{ user: User }> {
   const session = await getServerSession(authOptions);
