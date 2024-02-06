@@ -39,7 +39,12 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
           className="w-[80px] h-[80px] md:w-[140px] md:h-[140px] rounded-full flex-1"
         />
         <div>
-          <h1 className="sm:text-2xl">{user.email}</h1>
+          <h1 className="sm:text-xl">
+            {user.firstName} {user.lastName}
+          </h1>
+          {user.shortDescription && (
+            <h3 className="text-gray-500">{user.shortDescription}</h3>
+          )}
         </div>
       </div>
       <div className="flex items-center gap-4 mb-6">
@@ -47,7 +52,9 @@ const ProfileLayout = async ({ children }: { children: React.ReactNode }) => {
           { label: "Profile", href: "/profile" },
           { label: "Settings", href: "/profile/settings" },
         ].map((link) => (
-          <ActiveLink href={link.href}>{link.label}</ActiveLink>
+          <ActiveLink key={link.href} href={link.href}>
+            {link.label}
+          </ActiveLink>
         ))}
       </div>
       <hr className="mb-10" />

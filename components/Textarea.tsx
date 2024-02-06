@@ -1,14 +1,17 @@
+import { inputStyle, labelStyle } from "@/utils/classes";
+
 const Textarea = ({
   className,
+  label,
   ...props
 }: React.DetailedHTMLProps<
   React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   HTMLTextAreaElement
->) => (
-  <textarea
-    {...props}
-    className={`p-4 border border-gray-200 rounded ${className}`}
-  />
+> & { label: string }) => (
+  <div className="w-full">
+    {label && <label className={labelStyle}>{label}</label>}
+    <textarea {...props} className={`${inputStyle} ${className}`} />
+  </div>
 );
 
 export default Textarea;
