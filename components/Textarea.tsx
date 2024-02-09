@@ -7,7 +7,7 @@ const Textarea = ({
 }: React.DetailedHTMLProps<
   React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   HTMLTextAreaElement
-> & { label: string }) => (
+> & { label?: string }) => (
   <div className="w-full">
     {label && <label className={labelStyle}>{label}</label>}
     <textarea {...props} className={`${inputStyle} ${className}`} />

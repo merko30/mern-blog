@@ -5,45 +5,18 @@ import authOptions from "@/lib/authOptions";
 
 import transformFormData from "@/utils/transformFormData";
 
-import Input from "@/components/Input";
-import Textarea from "@/components/Textarea";
+import PostForm from "@/components/posts/PostForm";
+import { Post } from "@prisma/client";
 
 const CreatePost = () => {
-  async function createPost(formData: FormData) {
-    "use server";
-
-    const session = await getServerSession(authOptions);
-
-    // TODO: handle image
-    const data = transformFormData(formData, ["title", "content"]);
-
-    try {
-      const response = await fetch("http://localhost:3000/api/posts", {
-        method: "POST",
-        body: JSON.stringify({ ...data, authorId: session?.user?.id }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const json = await response.json();
-
-      // revalidatePath("/");
-      redirect(`/posts/${json.post.id}`);
-    } catch (error) {
-      return { error: "Something went wrong" };
-    }
-  }
+  const onSubmit = (data: Partial<Post>) => {
+    console.log(data);
+  };
 
   return (
-    <div className="lg:max-w-[600px] mx-auto pt-10">
+    <div className="lg:max-w-[600px]">
       <h1 className="text-2xl mb-8">What's on your mind?</h1>
-      <form action={createPost} className="flex flex-col gap-4">
-        <Input name="title" />
-        <Textarea name="content" rows={6} />
-        <Input type="file" name="image" />
-        <button type="submit">Save post</button>
-      </form>
+      <PostForm onSubmit={onSubmit} />
     </div>
   );
 };

@@ -7,7 +7,7 @@ const Input = ({
 }: React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
-> & { label: string }) => (
+> & { label?: string }) => (
   <div className="w-full">
     {label && <label className={labelStyle}>{label}</label>}
     <input {...props} className={`${inputStyle} ${className}`} />
