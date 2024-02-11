@@ -6,6 +6,7 @@ import AuthorActions from "@/components/posts/AuthorActions";
 async function getData(id: string): Promise<{ post: Post }> {
   const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
     headers: { "Content-Type": "application/json" },
+    next: { revalidate: 60 * 60 },
   });
 
   const json = await response.json();

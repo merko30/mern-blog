@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { Post } from "@prisma/client";
 
 import PostForm from "@/components/posts/PostForm";
@@ -18,32 +17,11 @@ const EditPostPage = async ({ params }: { params: { id: string } }) => {
 
   const { post } = data || {};
 
-  const onSubmit = async (data: Partial<Post>) => {
-    "use server";
-
-    try {
-      const response = await fetch("http://localhost:3000/api/posts", {
-        method: "PUT",
-        body: JSON.stringify({ ...data }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const json = await response.json();
-
-      // revalidatePath("/");
-      redirect(`/posts/${json.post.id}`);
-    } catch (error) {
-      return { error: "Something went wrong" };
-    }
-  };
-
   if (post) {
     return (
       <>
         <h1 className="text-2xl mb-8">Edit your post</h1>
-        <PostForm post={post} onSubmit={onSubmit} />
+        <PostForm post={post} type="edit" />
       </>
     );
   }

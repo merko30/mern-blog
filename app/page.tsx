@@ -2,7 +2,7 @@ import PostList from "@/components/posts/PostList";
 
 async function getData() {
   const res = await fetch("http://localhost:3000/api/posts", {
-    next: { revalidate: 10 },
+    next: { revalidate: 100 },
   });
 
   if (!res.ok) {
